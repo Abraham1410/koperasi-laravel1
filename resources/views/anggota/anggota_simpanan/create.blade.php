@@ -16,7 +16,7 @@
 
         <div>
             <label for="kodeTransaksiSimpanan" class="block font-medium text-gray-700">Kode Transaksi</label>
-            <input type="text" id="kodeTransaksiSimpanan" name="kodeTransaksiSimpanan" value="SMP-0001" readonly class="w-full mt-1 p-2 border border-gray-300 rounded">
+            <input type="text" id="kodeTransaksiSimpanan" name="kodeTransaksiSimpanan" value="{{ $kodeTransaksiSimpanan }}" readonly class="w-full mt-1 p-2 border border-gray-300 rounded">
         </div>
 
         <div>
@@ -24,17 +24,11 @@
             <input type="date" id="tanggal_simpanan" name="tanggal_simpanan" class="w-full mt-1 p-2 border border-gray-300 rounded">
         </div>
 
-        <div>
-            <label for="id_anggota" class="block font-medium text-gray-700">Nama Anggota</label>
-            <select id="id_anggota" name="id_anggota" class="w-full mt-1 p-2 border border-gray-300 rounded">
-                <option disabled selected>Pilih Anggota</option>
-                <option value="1">John Doe</option>
-                <option value="2">Jane Smith</option>
-                <option value="3">Alex Johnson</option>
-            </select>
-        </div>
+        <!-- No dropdown for anggota: display name + use hidden input -->
+        <input type="hidden" name="id_anggota" value="{{ $anggota->id }}">
+        <p class="mt-1 text-sm text-gray-800 font-semibold">{{ $anggota->nama }}</p>
 
-        <div>
+        {{-- <div>
             <label for="id_jenis_simpanan" class="block font-medium text-gray-700">Jenis Simpanan</label>
             <select id="id_jenis_simpanan" name="id_jenis_simpanan" class="w-full mt-1 p-2 border border-gray-300 rounded">
                 <option disabled selected>Pilih Jenis Simpanan</option>
@@ -43,11 +37,19 @@
                 <option value="3" data-nominal="250000">Simpanan Pokok</option>
                 <option value="4" data-nominal="250000">Simpanan Insidental</option>
             </select>
-        </div>
+        </div> --}}
+        <select id="id_jenis_simpanan" name="id_jenis_simpanan" class="w-full mt-1 p-2 border border-gray-300 rounded">
+            <option disabled selected>Pilih Jenis Simpanan</option>
+            @foreach ($jenisSimpananList as $jenis)
+                <option value="{{ $jenis->id }}" data-nominal="{{ $jenis->nominal }}">
+                    {{ $jenis->nama_jenis }}
+                </option>
+            @endforeach
+        </select>
 
         <div>
             <label for="jml_simpanan" class="block font-medium text-gray-700">Jumlah Simpanan</label>
-            <input type="number" id="jml_simpanan" name="jml_simpanan" class="w-full mt-1 p-2 border border-gray-300 rounded">
+            <input type="number" id="jml_simpanan" name="jml_simpanan" class="w-full mt-1 p-2 border border-gray-300 rounded" value="0">
         </div>
 
         <div>
