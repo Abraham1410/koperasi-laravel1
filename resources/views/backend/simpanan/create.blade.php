@@ -25,13 +25,15 @@
                 <label for="tanggal_simpanan">Tanggal Simpanan</label>
             </div>
             <div class="form-floating mb-3">
-                <select id="id_anggota" name="id_anggota" class="form-select">
-                    <option value="" selected disabled>Pilih Anggota</option>
-                    @foreach($namaNasabah as $nasabah)
-                    <option value="{{ $nasabah->id }}" {{ old('id_anggota') == $nasabah->id ? 'selected' : '' }}>{{ $nasabah->name }}</option>
-                    @endforeach
-                </select>
-                <label for="id_anggota">Nama Anggota</label>
+            <select id="nasabah_id" name="nasabah_id" class="form-select">
+                <option value="" selected disabled>Pilih Anggota</option>
+                @foreach($namaNasabah as $nasabah)
+                <option value="{{ $nasabah->id }}" {{ old('nasabah_id') == $nasabah->id ? 'selected' : '' }}>
+                    {{ $nasabah->user->name ?? $nasabah->nama }}
+                </option>
+                @endforeach
+            </select>
+            <label for="nasabah_id">Nama Anggota</label>
             </div>
             <div class="form-floating mb-3">
                 <select name="id_jenis_simpanan" class="form-control" required>

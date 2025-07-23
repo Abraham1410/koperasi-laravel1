@@ -34,8 +34,6 @@
         <div class="col-12">
             <div class="bg-light rounded h-100 p-4">
                 <div class="table-responsive">
-
-
                     <table class="table">
                         <thead>
                             <div class=" mb-3">

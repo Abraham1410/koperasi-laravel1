@@ -14,14 +14,19 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            // $table->foreignId('id_roles')->references('id')->on('roles')->onDelete('cascade');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('image')->nullable();
+
+            // 🔑 Kolom relasi foreign key ke tabel nasabah
+            $table->unsignedBigInteger('nasabah_id')->nullable();
+            $table->foreign('nasabah_id')->references('id')->on('nasabah')->onDelete('cascade');
+
             $table->rememberToken();
             $table->timestamps();
         });
+
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

@@ -41,7 +41,8 @@ class NasabahController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            // Buat nama acak dengan uniqid + random string
+            $imageName = uniqid() . '_' . time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('assets/backend/img'), $imageName);
         }
 
@@ -147,8 +148,13 @@ class NasabahController extends Controller
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('assets/backend/img'), $imageName);
 
-                // Update image field
+                // Update ke _anggota
                 DB::table('_anggota')->where('user_id', $id)->update([
+                    'image' => $imageName,
+                ]);
+
+                // Update ke users juga
+                User::where('id', $id)->update([
                     'image' => $imageName,
                 ]);
             }

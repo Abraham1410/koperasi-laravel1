@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             CreateAdminUserSeeder::class,
             JenisSimpananSeeder::class,
             AccountSeeder::class,
+            PengawasSeeder::class,
         ]);
     }
 }

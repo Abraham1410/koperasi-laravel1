@@ -47,4 +47,9 @@ protected $fillable = [
         ];
     }
 
+    public function anggota()
+    {
+        return $this->hasOne(Anggota::class, 'user_id', 'id');
+    }
+
 }
