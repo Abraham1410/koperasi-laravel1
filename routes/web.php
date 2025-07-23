@@ -179,7 +179,6 @@ Route::middleware('auth')->group(function () {
         });
 
         // Pinjaman Routes untuk Anggota
-        // Pinjaman Routes untuk Anggota
         Route::prefix('anggota/pinjaman')->name('anggota.pinjaman.')->group(function () {
             Route::get('/', [PinjamanUserController::class, 'index'])->name('index');
             Route::get('/create', [PinjamanUserController::class, 'create'])->name('create');
@@ -190,10 +189,12 @@ Route::middleware('auth')->group(function () {
 
         // Penarikan Routes untuk Anggota
         Route::prefix('anggota/penarikan')->name('anggota.penarikan.')->group(function () {
-            Route::get('/', [PenarikanUserController::class, 'index'])->name('index');
-            Route::get('/create', [PenarikanUserController::class, 'create'])->name('create');
-            Route::get('/main', [PenarikanUserController::class, 'main'])->name('main');
-            Route::get('/show', [PenarikanUserController::class, 'show'])->name('show');
+        Route::get('/', [PenarikanUserController::class, 'index'])->name('index');
+        Route::get('/create', [PenarikanUserController::class, 'create'])->name('create');
+        Route::post('/store', [PenarikanUserController::class, 'store'])->name('store'); // Route untuk menyimpan penarikan
+        Route::get('/main', [PenarikanUserController::class, 'main'])->name('main');
+        Route::get('/show/{id}', [PenarikanUserController::class, 'show'])->name('show');
+        Route::get('/get-saldo', [PenarikanUserController::class, 'getSaldo'])->name('getSaldo'); // Route untuk AJAX saldo
         });
 
     });
