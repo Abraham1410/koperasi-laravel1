@@ -68,7 +68,7 @@
                 <tbody class="divide-y divide-gray-200">
                     @forelse($penarikan as $item)
                         <tr>
-                            <td class="px-4 py-2 font-medium">{{ $item->kodeTransaksipenarikan }}</td>
+                            <td class="px-4 py-2 font-medium">{{ $item->kodeTransaksiPenarikan }}</td>
                             <td class="px-4 py-2">{{ \Carbon\Carbon::parse($item->tanggal_penarikan)->format('d-m-Y') }}</td>
                             <td class="px-4 py-2 text-green-600 font-semibold">Rp {{ number_format($item->jumlah_penarikan, 0, ',', '.') }}</td>
                             <td class="px-4 py-2">{{ $item->keterangan ?: '-' }}</td>

@@ -11,17 +11,17 @@ class PenarikanUserController extends Controller
 {
     public function index()
     {
-        return view('anggota.anggota_penarikan.index'); // Halaman utama penarikan
+        return view('anggota.anggota_penarikan.index');
     }
 
     public function create()
     {
         // Ambil data anggota yang sedang login
-        $anggota = DB::table('_anggota')->where('id', Auth::id())->first();
+        $anggota = DB::table('_anggota')->where('user_id', Auth::id())->first();
 
         // Cek apakah anggota memiliki pinjaman yang belum selesai
         $pinjaman = DB::table('pinjaman')
-            ->where('id_anggota', Auth::id())
+            ->where('id_anggota', $anggota->id ?? 0) // gunakan id anggota yang sebenarnya
             ->where('status_pengajuan', '!=', 3)
             ->first();
 
@@ -33,14 +33,14 @@ class PenarikanUserController extends Controller
         // Validasi input
         $request->validate([
             'tanggal_penarikan' => 'required|date',
-            'jumlah_penarikan' => 'required|numeric|min:1000', // Minimal penarikan 1000
+            'jumlah_penarikan' => 'required|numeric|min:1000',
             'keterangan' => 'nullable|string|max:255',
         ], [
             'jumlah_penarikan.min' => 'Jumlah penarikan minimal Rp 1.000',
         ]);
 
-        // Ambil data anggota yang sedang login
-        $anggota = DB::table('_anggota')->where('id', Auth::id())->first();
+        // Ambil data anggota yang sedang login berdasarkan user_id
+        $anggota = DB::table('_anggota')->where('user_id', Auth::id())->first();
 
         if (!$anggota) {
             Session::flash('error', 'Data anggota tidak ditemukan.');
@@ -55,7 +55,7 @@ class PenarikanUserController extends Controller
 
         // Periksa status pinjaman anggota
         $pinjaman = DB::table('pinjaman')
-            ->where('id_anggota', Auth::id())
+            ->where('id_anggota', $anggota->id)
             ->where('status_pengajuan', '!=', 3)
             ->first();
 
@@ -69,7 +69,7 @@ class PenarikanUserController extends Controller
 
         // Simpan data penarikan
         DB::table('penarikan')->insert([
-            'id_anggota' => Auth::id(),
+            'id_anggota' => $anggota->id,
             'tanggal_penarikan' => $request->tanggal_penarikan,
             'jumlah_penarikan' => $request->jumlah_penarikan,
             'keterangan' => $request->keterangan,
@@ -82,14 +82,14 @@ class PenarikanUserController extends Controller
 
         // Update saldo anggota
         DB::table('_anggota')
-            ->where('id', Auth::id())
+            ->where('id', $anggota->id)
             ->decrement('saldo', $request->jumlah_penarikan);
 
         // Periksa saldo anggota setelah penarikan
-        $anggotaUpdated = DB::table('_anggota')->where('id', Auth::id())->first();
-        if ($anggotaUpdated->saldo <= 0) {
+        $anggotaUpdated = DB::table('_anggota')->where('id', $anggota->id)->first();
+        if ($anggotaUpdated && $anggotaUpdated->saldo <= 0) {
             DB::table('_anggota')
-                ->where('id', Auth::id())
+                ->where('id', $anggota->id)
                 ->update(['status_anggota' => 0]);
         }
 
@@ -99,13 +99,19 @@ class PenarikanUserController extends Controller
 
     public function main(Request $request)
     {
-        // Mengambil data penarikan untuk anggota yang sedang login
+        // Ambil anggota berdasarkan user login
+        $anggota = DB::table('_anggota')->where('user_id', Auth::id())->first();
+
+        if (!$anggota) {
+            Session::flash('error', 'Data anggota tidak ditemukan.');
+            return redirect()->back();
+        }
+
         $penarikan = DB::table('penarikan')
             ->select('penarikan.id as penarikan_id', 'penarikan.*', '_anggota.*')
             ->leftJoin('_anggota', '_anggota.id', '=', 'penarikan.id_anggota')
-            ->where('penarikan.id_anggota', Auth::id());
+            ->where('penarikan.id_anggota', $anggota->id);
 
-        // Filter berdasarkan tanggal penarikan jika tersedia
         if ($request->has('start_date') && $request->has('end_date')) {
             $startDate = $request->get('start_date');
             $endDate = $request->get('end_date');
@@ -115,7 +121,6 @@ class PenarikanUserController extends Controller
             }
         }
 
-        // Filter berdasarkan pencarian
         if ($request->has('search')) {
             $search = $request->get('search');
             $penarikan = $penarikan->where(function ($query) use ($search) {
@@ -124,12 +129,10 @@ class PenarikanUserController extends Controller
             });
         }
 
-        // Paginate hasil query
         $penarikan = $penarikan->orderBy('penarikan.created_at', 'desc')->paginate(10);
 
-        // Ambil total penarikan user
         $totalPenarikan = DB::table('penarikan')
-            ->where('id_anggota', Auth::id())
+            ->where('id_anggota', $anggota->id)
             ->sum('jumlah_penarikan');
 
         return view('anggota.anggota_penarikan.main', compact('penarikan', 'totalPenarikan'));
@@ -137,12 +140,18 @@ class PenarikanUserController extends Controller
 
     public function show($id)
     {
-        // Ambil detail penarikan berdasarkan ID dan pastikan milik user yang sedang login
+        $anggota = DB::table('_anggota')->where('user_id', Auth::id())->first();
+
+        if (!$anggota) {
+            Session::flash('error', 'Data anggota tidak ditemukan.');
+            return redirect()->route('anggota.penarikan.main');
+        }
+
         $penarikan = DB::table('penarikan')
             ->select('penarikan.*', '_anggota.name', '_anggota.saldo')
             ->leftJoin('_anggota', '_anggota.id', '=', 'penarikan.id_anggota')
             ->where('penarikan.id', $id)
-            ->where('penarikan.id_anggota', Auth::id())
+            ->where('penarikan.id_anggota', $anggota->id)
             ->first();
 
         if (!$penarikan) {
@@ -161,10 +170,9 @@ class PenarikanUserController extends Controller
         return 'PNR-' . str_pad($lastId, 4, '0', STR_PAD_LEFT);
     }
 
-    // Method untuk mendapatkan saldo anggota (untuk AJAX)
     public function getSaldo()
     {
-        $anggota = DB::table('_anggota')->where('id', Auth::id())->first();
+        $anggota = DB::table('_anggota')->where('user_id', Auth::id())->first();
 
         return response()->json([
             'saldo' => $anggota ? $anggota->saldo : 0

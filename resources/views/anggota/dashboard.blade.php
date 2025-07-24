@@ -45,7 +45,7 @@
     <!-- Page Content -->
     <main class="flex-grow">
         <!-- Logo-only Content -->
-        <section class="pt-40 pb-12">
+        <section class="pt-36 pb-2">
             <div class="max-w-4xl mx-auto px-6 flex justify-center items-center">
                 <h1 class="text-4xl md:text-5xl font-semibold flex items-center gap-x-2
                         text-white drop-shadow-lg">
@@ -55,8 +55,17 @@
             </div>
         </section>
 
+        <section class="py-4 max-w-6xl mx-auto px-6 grid">
+            <div class="col-span-full flex justify-center">
+                <div class="bg-blue-100 border text-blue-800 p-4 rounded-2xl mb-6 w-full max-w-md text-center">
+                    <h2 class="text-xl font-semibold">Saldo Anda Saat Ini</h2>
+                    <p class="text-xl">Rp {{ number_format($totalSaldo, 0, ',', '.') }}</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Info Boxes -->
-        <section class="py-16 flex-grow">
+        <section class="pb-16 flex-grow">
             <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-6">
                 <!-- Simpanan -->
                 <a href="{{ route('anggota.simpanan.index') }}" class="block !no-underline bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition duration-300 hover:bg-gray-50">
