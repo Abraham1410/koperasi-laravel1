@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Anggota - Koperasi Merah Putih</title>
 
     <!-- Bootstrap 5 CDN -->
@@ -52,15 +52,6 @@
                     <i class="fa fa-hashtag"></i>
                     KOPERASI MERAH PUTIH
                 </h1>
-            </div>
-        </section>
-
-        <section class="py-4 max-w-6xl mx-auto px-6 grid">
-            <div class="col-span-full flex justify-center">
-                <div class="bg-blue-100 border text-blue-800 p-4 rounded-2xl mb-6 w-full max-w-md text-center">
-                    <h2 class="text-xl font-semibold">Saldo Anda Saat Ini</h2>
-                    <p class="text-xl">Rp {{ number_format($totalSaldo, 0, ',', '.') }}</p>
-                </div>
             </div>
         </section>
 
