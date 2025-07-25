@@ -42,7 +42,7 @@
         </div>
     </header>
 
-    <!-- Page Content -->
+    <!-- Page Content  -->
     <main class="flex-grow">
         <!-- Logo-only Content -->
         <section class="pt-40 pb-18">

@@ -1,7 +1,7 @@
 @extends('layouts.anggota')
 
 @section('content')
-    <!-- Header Section -->
+    <!-- Header Section  -->
     <section class="pt-28 pb-12">
         <div class="max-w-4xl mx-auto px-6 flex justify-center items-center">
             <h1 class="text-4xl md:text-5xl font-semibold flex items-center gap-x-2 

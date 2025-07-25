@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SimpananUserController extends Controller
 {
-    // Constants untuk jenis simpanan (sama dengan SimpananController)
+    // Constants untuk jenis simpanan (sama dengan SimpananController
     const JENIS_SIMPANAN_POKOK = 1;
     const JENIS_SIMPANAN_WAJIB = 4;
     const JENIS_SIMPANAN_SUKARELA = 5;
