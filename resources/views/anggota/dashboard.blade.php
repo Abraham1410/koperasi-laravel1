@@ -21,14 +21,14 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->nama ?? 'John Doe' }}
+                            {{ Auth::user()->name }}
                             <svg id="chevronIcon" class="ms-1" style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route(name: 'anggota.profile.edit') }}">Profile</a></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                     @csrf
@@ -45,7 +45,7 @@
     <!-- Page Content -->
     <main class="flex-grow">
         <!-- Logo-only Content -->
-        <section class="pt-36 pb-2">
+        <section class="pt-40 pb-18">
             <div class="max-w-4xl mx-auto px-6 flex justify-center items-center">
                 <h1 class="text-4xl md:text-5xl font-semibold flex items-center gap-x-2
                         text-white drop-shadow-lg">

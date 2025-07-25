@@ -11,7 +11,29 @@ class PenarikanUserController extends Controller
 {
     public function index()
     {
-        return view('anggota.anggota_penarikan.index');
+        $user = Auth::user();
+
+        // Get the related anggota_id (if needed)
+        $anggota = DB::table('_anggota')->where('user_id', $user->id)->first();
+
+        // Prevent null error
+        if (!$anggota) {
+            return view('anggota.dashboard')->with('totalSaldo', 0);
+        }
+
+        // Sum deposits (setoran)
+        $totalSetoran = DB::table('simpanan')
+            ->where('id_anggota', $anggota->id)
+            ->sum('jml_simpanan');
+
+        // Sum withdrawals (penarikan)
+        $totalPenarikan = DB::table('penarikan')
+            ->where('id_anggota', $anggota->id)
+            ->sum('jumlah_penarikan');
+
+        $totalSaldo = $totalSetoran - $totalPenarikan;
+
+        return view('anggota.anggota_penarikan.index', compact('totalSaldo'));
     }
 
     public function create()
