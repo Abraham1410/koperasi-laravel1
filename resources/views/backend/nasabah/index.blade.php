@@ -2,7 +2,7 @@
 @section('title', 'Nasabah')
 @section('content')
 <div class="container-fluid pt-4 px-4">
-    <h2 class="mb-4">Data Nasabah</h2>
+    <h2 class="mb-4">Data Anggota</h2>
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

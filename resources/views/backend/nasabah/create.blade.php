@@ -12,7 +12,7 @@
     </div>
     @endif
 
-    <h2 class="mb-4">Tambah Nasabah</h2>
+    <h2 class="mb-4">Tambah Anggota</h2>
     <div class="bg-light rounded h-100 p-4">
         <form method="POST" action="{{ route('storeNasabah') }}" enctype="multipart/form-data">
             @csrf

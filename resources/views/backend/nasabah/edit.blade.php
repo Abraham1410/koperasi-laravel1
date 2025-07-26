@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container-fluid pt-4 px-4">
-    <h6 class="mb-4">Edit Nasabah</h6>
+    <h6 class="mb-4">Edit Anggota</h6>
 
     @if(Session::has('message'))
     <div class="alert alert-success alert-dismissible">
