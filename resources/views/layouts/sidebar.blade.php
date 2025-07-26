@@ -26,7 +26,7 @@
 
             @can('nasabah-list')
             <a href="{{ route('nasabah') }}" class="nav-item nav-link {{ request()->is('nasabah*') ? 'active' : '' }}">
-                <i class="fa fa-user-friends me-2"></i>Nasabah
+                <i class="fa fa-user-friends me-2"></i>Anggota
             </a>
             @endcan
 
