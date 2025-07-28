@@ -68,7 +68,7 @@
                     <tr>
                         <th scope="col">Kode Penarikan</th>
                         <th scope="col">Tanggal</th>
-                        <th scope="col">Nasabah</th>
+                        <th scope="col">Anggota</th>
                         <th scope="col">Jumlah Penarikan</th>
                         <th scope="col">Keterangan</th>
                         @can('penarikan-edit')

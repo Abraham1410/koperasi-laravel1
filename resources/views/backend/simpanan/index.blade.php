@@ -74,7 +74,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Kode Transaksi</th>
                         <th scope="col">Tanggal</th>
-                        <th scope="col">Nasabah</th>
+                        <th scope="col">Anggota</th>
                         <th scope="col">Transaksi</th>
                         <th scope="col">Jenis Simpanan</th>
                         @can('simpanan-edit')

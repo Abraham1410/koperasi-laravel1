@@ -67,7 +67,7 @@
                     <tr>
                         <th scope="col">Kode Pinjam</th>
                         <th scope="col">Tanggal</th>
-                        <th scope="col">Nasabah</th>
+                        <th scope="col">Anggota</th>
                         <th scope="col">Jumlah Dipinjam</th>
                         <th scope="col">Durasi</th>
                         <th scope="col">Status</th>
